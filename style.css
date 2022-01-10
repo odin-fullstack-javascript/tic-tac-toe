@@ -32,14 +32,18 @@ body {
 }
 
 .options {
+  padding: 0.5rem;
+  position: relative;
   display: grid;
   grid-auto-flow: column;
   place-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .player-selection__circle,
 .player-selection__cross {
+  display: grid;
+  place-items: center;
   cursor: pointer;
   transition: transform .2s ease-in-out;
 }
@@ -47,6 +51,18 @@ body {
 .player-selection__circle:hover,
 .player-selection__cross:hover {
   transform: translateY(-2px);
+}
+
+[selected] {
+  border: 2px solid var(--gold);
+  padding: 0.2rem;
+}
+
+.vertical-divider {
+  position: absolute;
+  border-left: 2px solid var(--pink);
+  height: 65px;
+  left: 50%;
 }
 
 .game-board {
@@ -65,6 +81,7 @@ body {
 .game-board__spot {
   background: var(--white);
   border: 3px solid var(--pink);
+  transition: background 0.3s ease-in-out;
 }
 
 .game-board__spot:hover {
