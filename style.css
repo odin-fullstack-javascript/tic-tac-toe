@@ -54,6 +54,7 @@ body {
 }
 
 [selected] {
+  display: grid;
   border: 2px solid var(--gold);
   padding: 0.2rem;
 }
@@ -87,6 +88,14 @@ body {
 .game-board__spot:hover {
   cursor: pointer;
   background: #ffe6c4;
+}
+
+[cross],
+[circle],
+.game-board__spot:hover {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .footer-brand a {
