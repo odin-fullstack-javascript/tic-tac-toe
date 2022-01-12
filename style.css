@@ -40,16 +40,14 @@ body {
   gap: 1.5rem;
 }
 
-.player-selection__circle,
-.player-selection__cross {
+.player-selection__item {
   display: grid;
   place-items: center;
   cursor: pointer;
   transition: transform .2s ease-in-out;
 }
 
-.player-selection__circle:hover,
-.player-selection__cross:hover {
+.player-selection__item:hover {
   transform: translateY(-2px);
 }
 
