@@ -15,6 +15,19 @@ const Gameboard = (
       [2,4,6]
     ]
 
+    
+    const checkWin = (currentMark) => {
+      //const spotItems = document.querySelectorAll('[data-cell]')
+      //const attribute = currentAttribute === 'o' ? 'circle' : 'cross'
+      return winningConditions.some(condition => {
+        const check = condition.every(index => {
+          return grid[index] === currentMark
+        })
+
+        return check === true
+      })
+    }
+
     const renderGrid = () => {
       const gridTemplate = grid.map((item, index) => {
         if(!item) {
@@ -57,7 +70,8 @@ const Gameboard = (
       grid,
       renderGrid,
       clearGrid,
-      winningConditions
+      winningConditions,
+      checkWin
     }
   }
 )()
@@ -103,9 +117,9 @@ const InteractionHandler = (
         event.stopPropagation()
         const target = event.target
         if(target.hasAttribute('data-cell') && selected) {
-          console.log(target.id)
           if(!(target.hasAttribute('circle') || target.hasAttribute('cross'))){
             Gameboard.grid[target.id] = playerName
+            Gameboard.checkWin(playerName) ? console.log(`${playerName} wins` ) : ''
             Gameboard.renderGrid()
           }
         }
@@ -125,6 +139,12 @@ Gameboard.renderGrid()
 InteractionHandler.selectPlayer()
 
 
-// const Player = function() {
+const Player = function(name) {
+  const playerName = name
 
-// }
+  return {
+    playerName
+  }
+}
+
+const player_1 = Player('circle')
