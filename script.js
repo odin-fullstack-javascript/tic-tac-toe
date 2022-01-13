@@ -36,14 +36,14 @@ const Gameboard = (
           return /*html*/ `
             <div circle
               data-cell 
-              style="background-image: url('/images/circle.svg')"
+              style="background-image: url('./images/circle.svg')"
               class="game-board__spot" 
               index="${index}"></div>
           `
         } else {
           return /*html*/ `
             <div cross
-              style="background-image: url('/images/cross.svg')"
+              style="background-image: url('./images/cross.svg')"
               class="game-board__spot" 
               data-cell
               index="${index}" >
