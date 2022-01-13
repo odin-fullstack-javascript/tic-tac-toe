@@ -104,17 +104,17 @@ const InteractionHandler = (
       })
     }
 
-    const resetSelection = () => {
-      //selected = false
+    const resetGame = () => {
+      selected = false
       const options = playerOptions.querySelectorAll('.player-selection__item')
-
       options.forEach(option => {
         option.removeAttribute('selected')
       })
+      Gameboard.clearGrid()
     }
 
     let currentSymbol = ''
-
+    
     const placeMarker = (marker) => {
       Gameboard.boardCells().forEach(cell => {
         cell.addEventListener('click', event => {
@@ -129,7 +129,14 @@ const InteractionHandler = (
         
         currentSymbol = marker
         Gameboard.renderGrid()
-        Gameboard.checkWin(marker) ? console.log(`${marker} wins`) : ''
+
+        if(Gameboard.checkWin(marker)) {
+          EndgameDisplay.showWin()
+        } 
+        if(Gameboard.grid.join('').length === 9) {
+          EndgameDisplay.showDraw()
+        }
+
         })
       })
     }
@@ -144,7 +151,7 @@ const InteractionHandler = (
 
     return {
       placeMarker,
-      resetSelection,
+      resetGame,
       selectPlayer,
       selected,
       changeSymbol
@@ -152,8 +159,53 @@ const InteractionHandler = (
   }
 )()
 
-Gameboard.renderGrid()
-InteractionHandler.selectPlayer()
+
+const EndgameDisplay = (
+  function() {
+    const winDisplay = () => document.querySelector('.win')
+    const drawDisplay = () => document.querySelector('.draw')
+    const resetButton = (display) => display.querySelector('[data-reset]') 
+    
+
+    const _showDisplay = (element) => element.style.display = 'grid'
+    const _hideDisplay = (element) => element.style.display = 'none'
+
+    const showWin = () => {
+      _showDisplay(winDisplay())
+      resetDisplay(winDisplay())
+    }
+
+    const showDraw = () => {
+      _showDisplay(drawDisplay())
+      resetDisplay(drawDisplay())
+    }
+
+    const resetDisplay = (element) => {
+      console.log(element)
+      resetButton(element).addEventListener('click',()=>{
+        _hideDisplay(element)
+        InteractionHandler.resetGame()
+      })
+    }
+
+    return {
+      showWin,
+      showDraw,
+      winDisplay,
+      drawDisplay,
+      resetButton,
+      resetDisplay
+    }
+  }
+)()
+
+
+function start() {
+  Gameboard.renderGrid()
+  InteractionHandler.selectPlayer()
+}
+
+start()
 
 
 

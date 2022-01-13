@@ -127,3 +127,46 @@ body {
   text-decoration: none;
   align-items: center;
 }
+
+.endgame-message {
+  position: absolute;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  place-items: center;
+  align-content: center;
+  gap: 1rem;
+}
+
+.endgame-message h1 {
+  user-select: none;
+  font-size: 2.5rem;
+}
+
+.endgame-message p {
+  user-select: none;
+  cursor: pointer;
+}
+
+.win {
+  background: radial-gradient(50% 50% at 50% 50%, #FFE65A 0%, #EFD750 100%);
+  color: var(--dark);
+}
+
+.win {
+  display: none;
+  background: radial-gradient(50% 50% at 50% 50%, #FFE65A 0%, #EFD750 100%);
+  color: var(--dark);
+}
+
+.loose {
+  display: none;
+  background: radial-gradient(50% 50% at 50% 50%, #27051B 0%, #000000 100%);
+  color: var(--gold);
+}
+
+.draw {
+  display: none;
+  background: radial-gradient(50% 50% at 50% 50%, #FBBFCA 0%, #FFA0B1 100%);
+  color: var(--dark);
+}
