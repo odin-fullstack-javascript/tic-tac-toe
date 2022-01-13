@@ -1,6 +1,7 @@
 const Gameboard = (
   function () {
     const boardElement = document.querySelector('[data-board]')
+    const boardCells = () => document.querySelectorAll('.game-board__spot')
 
     const grid = ['','','','','','','','','']
 
@@ -14,11 +15,8 @@ const Gameboard = (
       [0,4,8],
       [2,4,6]
     ]
-
     
     const checkWin = (currentMark) => {
-      //const spotItems = document.querySelectorAll('[data-cell]')
-      //const attribute = currentAttribute === 'o' ? 'circle' : 'cross'
       return winningConditions.some(condition => {
         const check = condition.every(index => {
           return grid[index] === currentMark
@@ -54,6 +52,7 @@ const Gameboard = (
         }
       })
       boardElement.innerHTML = gridTemplate.join('')
+      InteractionHandler.changeSymbol()
     }
 
     const clearGrid = () => {
@@ -71,7 +70,8 @@ const Gameboard = (
       renderGrid,
       clearGrid,
       winningConditions,
-      checkWin
+      checkWin,
+      boardCells
     }
   }
 )()
@@ -91,20 +91,19 @@ const InteractionHandler = (
         if (target && !selected) {
           target.setAttribute('selected', '')
           if(target.hasAttribute('data-circle')) {
-            console.log('circle selected')
-            InteractionHandler.placeMarker('o')
+            placeMarker('o')
             selected = true 
           } else {
-            console.log('cross selected')
-            InteractionHandler.placeMarker('x')
-            selected = true 
+            placeMarker('x')
+            selected = true
           }
         }
+
       })
     }
 
     const resetSelection = () => {
-      selected = false
+      //selected = false
       const options = playerOptions.querySelectorAll('.player-selection__item')
 
       options.forEach(option => {
@@ -112,25 +111,41 @@ const InteractionHandler = (
       })
     }
 
-    const placeMarker = (playerName) => {
-      Gameboard.boardElement.addEventListener('click', (event) => {
+    let currentSymbol = ''
+
+    const placeMarker = (marker) => {
+      Gameboard.boardCells().forEach(cell => {
+        cell.addEventListener('click', event => {
         event.stopPropagation()
         const target = event.target
+        
         if(target.hasAttribute('data-cell') && selected) {
           if(!(target.hasAttribute('circle') || target.hasAttribute('cross'))){
-            Gameboard.grid[target.id] = playerName
-            Gameboard.checkWin(playerName) ? console.log(`${playerName} wins` ) : ''
-            Gameboard.renderGrid()
+            Gameboard.grid[target.id] = marker
           }
         }
+        
+        currentSymbol = marker
+        Gameboard.renderGrid()
+        Gameboard.checkWin(marker) ? console.log(`${marker} wins`) : ''
+        })
       })
+    }
+
+    const changeSymbol = () => {
+      if (currentSymbol === 'o') {
+        placeMarker('x')
+      } else if (currentSymbol === 'x') {
+        placeMarker('o')
+      }
     }
 
     return {
       placeMarker,
       resetSelection,
+      selectPlayer,
       selected,
-      selectPlayer
+      changeSymbol
     }
   }
 )()
@@ -139,12 +154,11 @@ Gameboard.renderGrid()
 InteractionHandler.selectPlayer()
 
 
-const Player = function(name) {
-  const playerName = name
 
-  return {
-    playerName
-  }
-}
+// const Player = function(name) {
+//   const playerName = name
 
-const player_1 = Player('circle')
+//   return {
+//     playerName
+//   }
+// }
