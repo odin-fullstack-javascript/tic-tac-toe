@@ -131,7 +131,7 @@ const InteractionHandler = (
         Gameboard.renderGrid()
 
         if(Gameboard.checkWin(marker)) {
-          EndgameDisplay.showWin()
+          EndgameDisplay.showWin(marker)
         } 
         if(Gameboard.grid.join('').length === 9) {
           EndgameDisplay.showDraw()
@@ -170,7 +170,8 @@ const EndgameDisplay = (
     const _showDisplay = (element) => element.style.display = 'grid'
     const _hideDisplay = (element) => element.style.display = 'none'
 
-    const showWin = () => {
+    const showWin = (marker) => {
+      winDisplay().querySelector('[data-marker]').textContent = marker.toUpperCase()
       _showDisplay(winDisplay())
       resetDisplay(winDisplay())
     }
