@@ -92,9 +92,11 @@ const InteractionHandler = (
           target.setAttribute('selected', '')
           if(target.hasAttribute('data-circle')) {
             placeMarker('o')
+            Gameboard.boardElement.style.display = 'grid'
             selected = true 
           } else {
             placeMarker('x')
+            Gameboard.boardElement.style.display = 'grid'
             selected = true
           }
         }
